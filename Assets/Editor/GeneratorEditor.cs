@@ -21,6 +21,6 @@ public class GeneratorEditor : Editor
         GUILayout.Label("Info");
         GUILayout.Label($"Cost: {_generator.GetCost()}");
         GUILayout.Label($"Production: {_generator.GetProduction()}");
-        GUILayout.Label($"Time to buy: {_generator.GetCost() / FindAnyObjectByType<Bank>().GetProduction()}");
+        GUILayout.Label($"Time to buy: {_generator.GetCost() / FindAnyObjectByType<Bank>().GetTotalProduction()}");
     }
 }

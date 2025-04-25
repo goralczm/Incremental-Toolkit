@@ -26,7 +26,7 @@ public class Bank : MonoBehaviour
     {
         GameTick.OnTick += delegate(object sender, GameTick.OnTickEventArgs e)
         {
-            if (e.tick % (int)(1f / GameTick.TICK_INTERVAL) == 0) ProduceCurrency();
+            if (e.tick % (int)(1f / GameTick.TICK_INTERVAL) == 0) ProduceTotalCurrency();
         };
     }
 
@@ -50,17 +50,22 @@ public class Bank : MonoBehaviour
         SetCurrency(GetCurrency() + amount);
     }
 
-    public float GetProduction()
+    public float GetTotalProduction()
     {
         float generatorsProduction = _generatorsController.GetGenerators().Sum(g => g.GetProduction());
         float prestigeMultiplier = Mathf.Pow(1 + .02f, GetPrestige());
         
-        return generatorsProduction * prestigeMultiplier * _multiplier;
+        return generatorsProduction * prestigeMultiplier;
     }
 
-    private void ProduceCurrency()
+    public float ApplyMultiplier(float currency)
     {
-        AddCurrency(GetProduction());
+        return currency * _multiplier;
+    }
+
+    public void ProduceTotalCurrency()
+    {
+        AddCurrency(ApplyMultiplier(GetTotalProduction()));
     }
 
     public int GetPrestige() => _prestige;

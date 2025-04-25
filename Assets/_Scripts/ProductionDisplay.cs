@@ -12,10 +12,10 @@ public class ProductionDisplay : MonoBehaviour
     {
         Bank.OnCurrencyChanged += (sender, args) =>
         {
-            UpdateDisplay(_bank.GetProduction());
+            UpdateDisplay(_bank.GetTotalProduction());
         };
         
-        UpdateDisplay(_bank.GetProduction());
+        UpdateDisplay(_bank.GetTotalProduction());
     }
 
     private void UpdateDisplay(float amount)
