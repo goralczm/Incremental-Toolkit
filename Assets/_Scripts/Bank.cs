@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Zenject;
 
 public class Bank : MonoBehaviour
 {
@@ -9,22 +10,20 @@ public class Bank : MonoBehaviour
     {
         public float Currency;
     }
+    
+    public const float KAPPA = .0065f;
+    public const float BETA = .5f;
 
     [SerializeField] private float _currency;
     [SerializeField] private int _prestige;
     [SerializeField] private float _multiplier = 1f;
     
     public static event EventHandler<OnCurrencyChangedEventArgs> OnCurrencyChanged;
-    
-    private static List<Generator> _generators = new();
 
-    public const float KAPPA = .0065f;
-    public const float BETA = .5f;
+    [Inject] private GeneratorsController _generatorsController;
 
     private void Awake()
     {
-        _generators = new();
-        
         GameTick.OnTick += delegate(object sender, GameTick.OnTickEventArgs e)
         {
             if (e.tick % (int)(1f / GameTick.TICK_INTERVAL) == 0) ProduceCurrency();
@@ -51,19 +50,9 @@ public class Bank : MonoBehaviour
         SetCurrency(GetCurrency() + amount);
     }
 
-    public static void RegisterGenerator(Generator generator)
-    {
-        _generators.Add(generator);
-    }
-
-    public static void RemoveGenerator(Generator generator)
-    {
-        _generators.Remove(generator);
-    }
-
     public float GetProduction()
     {
-        float generatorsProduction = _generators.Sum(g => g.GetProduction());
+        float generatorsProduction = _generatorsController.GetGenerators().Sum(g => g.GetProduction());
         float prestigeMultiplier = Mathf.Pow(1 + .02f, GetPrestige());
         
         return generatorsProduction * prestigeMultiplier * _multiplier;

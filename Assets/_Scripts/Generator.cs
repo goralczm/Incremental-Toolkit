@@ -35,16 +35,6 @@ public class Generator : MonoBehaviour
         _rend.color = _notEnoughCurrencyColor;
     }
 
-    private void OnEnable()
-    {
-        Bank.RegisterGenerator(this);
-    }
-
-    private void OnDisable()
-    {
-        Bank.RemoveGenerator(this);
-    }
-
     public void AddLevel() => _level++;
 
     public bool BuyUpgrade()
