@@ -1,18 +1,17 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using Zenject;
 
 namespace Core.Generators
 {
     public class GeneratorUnlockDirector : MonoBehaviour
     {
-        [SerializeField] private List<Generator> _generators = new();
+        [Inject] private GeneratorsController _generatorsController;
 
         private void Start()
         {
             Generator.OnGeneratorLeveledUp += (sender, args) =>
             {
-                Generator nextTierGenerator = _generators.Find(g => g.GetTier() == args.Generator.GetTier() + 1);
+                Generator nextTierGenerator = _generatorsController.GetAllGenerators().Find(g => g.GetTier() == args.Generator.GetTier() + 1);
 
                 if (nextTierGenerator != null && !nextTierGenerator.isActiveAndEnabled)
                 {

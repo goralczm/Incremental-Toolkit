@@ -1,11 +1,8 @@
 {
-    "name": "Core",
-    "rootNamespace": "Core",
+    "name": "Utilities",
+    "rootNamespace": "Utilities",
     "references": [
-        "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
-        "GUID:ce222ea54d7c1424cac9a55a695c1f4b",
-        "GUID:a390daa4d222ec74ebfae232c7777c1b"
+        "GUID:ce222ea54d7c1424cac9a55a695c1f4b"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
