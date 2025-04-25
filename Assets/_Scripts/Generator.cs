@@ -16,6 +16,7 @@ public class Generator : MonoBehaviour
     [SerializeField] private Color _notEnoughCurrencyColor;
     [SerializeField] private Color _enoughCurrencyColor;
     [SerializeField] private float _multiplier = 1;
+    [SerializeField] private bool _registerOnStart;
 
     [Inject] private Bank _bank;
     [SerializeField] private SpriteRenderer _rend;
@@ -33,6 +34,8 @@ public class Generator : MonoBehaviour
         };
         
         _rend.color = _notEnoughCurrencyColor;
+        
+        if (_registerOnStart) Bank.RegisterGenerator(this);
     }
 
     private void OnEnable()
@@ -63,7 +66,7 @@ public class Generator : MonoBehaviour
 
     public void ProduceCurrency()
     {
-        _bank.AddCurrency(GetProduction());
+        _bank.AddCurrency(_bank.ApplyMultiplier(GetProduction()));
     }
 
     public float GetProduction()
