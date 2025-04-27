@@ -41,6 +41,9 @@ namespace Core.Generators
             };
 
             _rend.color = _notEnoughCurrencyColor;
+
+            OnGeneratorChangedState?.Invoke(this,
+                new OnGeneratorChangedStateArgs { Generator = this, IsActive = true });
         }
 
         private void OnEnable()

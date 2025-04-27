@@ -20,7 +20,10 @@ namespace Core.Generators
             Generator.OnGeneratorChangedState += (sender, args) =>
             {
                 if (args.IsActive)
-                    _activeGenerators.Add(args.Generator);
+                {
+                    if (!_activeGenerators.Contains(args.Generator))
+                        _activeGenerators.Add(args.Generator);
+                }
                 else
                     _activeGenerators.Remove(args.Generator);
 

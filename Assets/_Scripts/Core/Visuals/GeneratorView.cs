@@ -42,9 +42,9 @@ namespace Core.Visuals
             if (Time.time < _cooldownTime) return;
 
             _currentGeneratorIndex++;
-            MoveToTargetPosition();
 
             UpdateButtonsVisibility();
+            MoveToTargetPosition();
         }
 
         public void MoveLeft()
@@ -52,9 +52,9 @@ namespace Core.Visuals
             if (Time.time < _cooldownTime) return;
 
             _currentGeneratorIndex--;
-            MoveToTargetPosition();
 
             UpdateButtonsVisibility();
+            MoveToTargetPosition();
         }
 
         private void MoveToTargetPosition()

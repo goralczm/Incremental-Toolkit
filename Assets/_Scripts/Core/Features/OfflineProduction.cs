@@ -11,7 +11,7 @@ namespace Core.Features
         private float _earned;
         private TimeSpan _offlineDuration;
 
-        private void Awake()
+        private void Start()
         {
             SimulateOfflineProduction();
         }
