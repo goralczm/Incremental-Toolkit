@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using Core.Generators;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Core
@@ -21,13 +23,13 @@ namespace Core
         public const float BETA = .5f;
 
         [SerializeField] private float _currency;
-        [SerializeField] private int _prestige;
+        [FormerlySerializedAs("_prestige")] [SerializeField] private int _prestigePoints;
         [SerializeField] private float _multiplier = 1f;
+
+        [Inject] private GeneratorsController _generatorsController;
 
         public static event EventHandler<OnCurrencyChangedEventArgs> OnCurrencyChanged;
         public static event EventHandler<OnPrestigeIncreasedEventArgs> OnPrestigeIncreased;
-
-        [Inject] private GeneratorsController _generatorsController;
 
         private void Awake()
         {
@@ -67,7 +69,7 @@ namespace Core
 
         public float GetPrestigeMultiplier()
         {
-            return Mathf.Pow(1 + .02f, GetPrestige());
+            return Mathf.Pow(1 + .02f, GetPrestigePoints());
         }
 
         public float ApplyMultiplier(float currency)
@@ -80,14 +82,19 @@ namespace Core
             AddCurrency(ApplyMultiplier(GetTotalProduction()));
         }
 
-        public int GetPrestige() => _prestige;
+        public int GetPrestigePoints() => _prestigePoints;
 
-        public int GetPrestigePoints()
+        public int CalculatePrestigePoints()
         {
             return Mathf.FloorToInt(KAPPA * Mathf.Pow(GetCurrency(), BETA));
         }
 
-        public void IncreasePrestige()
+        public void SetPrestigePoints(int prestigePoints)
+        {
+            _prestigePoints = prestigePoints;
+        }
+
+        public void Prestige()
         {
             Generator[] generators =
                 FindObjectsByType<Generator>(FindObjectsInactive.Include, FindObjectsSortMode.None);
@@ -100,8 +107,8 @@ namespace Core
                 generators[i].SetLevel(1);
             }
 
-            _prestige += GetPrestigePoints();
-            OnPrestigeIncreased?.Invoke(this, new OnPrestigeIncreasedEventArgs { Prestige = GetPrestige() });
+            _prestigePoints += CalculatePrestigePoints();
+            OnPrestigeIncreased?.Invoke(this, new OnPrestigeIncreasedEventArgs { Prestige = GetPrestigePoints() });
             SetCurrency(0);
         }
 

@@ -11,7 +11,7 @@ namespace Core
         {
             Bank.OnCurrencyChanged += (sender, args) =>
             {
-                if (((Bank)sender).GetPrestigePoints() >= _threshold)
+                if (((Bank)sender).CalculatePrestigePoints() >= _threshold)
                     _prestigeButton.SetActive(true);
             };
         }

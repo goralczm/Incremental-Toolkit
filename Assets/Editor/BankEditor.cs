@@ -17,7 +17,7 @@ public class BankEditor : Editor
         GUILayout.Label("Debug");
         if (Application.isPlaying)
             GUILayout.Label($"Production: {_bank.GetTotalProduction()}");
-        GUILayout.Label($"Prestige Points: {_bank.GetPrestigePoints()}");
+        GUILayout.Label($"Prestige Points: {_bank.CalculatePrestigePoints()}");
 
         float ppThreshold = Mathf.Pow(Bank.KAPPA, -(1 / Bank.BETA));
 
@@ -30,6 +30,6 @@ public class BankEditor : Editor
         }
 
         if (GUILayout.Button("Prestige!"))
-            _bank.IncreasePrestige();
+            _bank.Prestige();
     }
 }
