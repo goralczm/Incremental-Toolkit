@@ -24,5 +24,10 @@ namespace Core
         {
             _effects.Add(effect);
         }
+
+        public void ClearEffects()
+        {
+            _effects.Clear();
+        }
     }
 }

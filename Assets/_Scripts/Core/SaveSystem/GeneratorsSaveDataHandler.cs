@@ -31,10 +31,10 @@ namespace Core
         {
             List<(string, object)> data = new();
 
-            foreach (Generator generator in _generatorsController.GetAllGenerators())
+            foreach (IGenerator generator in _generatorsController.GetAllGenerators())
             {
                 data.Add(($"Generator Tier {generator.GetTier()} Level", generator.GetLevel()));
-                data.Add(($"Generator Tier {generator.GetTier()} State", generator.gameObject.activeSelf));
+                data.Add(($"Generator Tier {generator.GetTier()} State", generator.GetState()));
             }
 
             return data;

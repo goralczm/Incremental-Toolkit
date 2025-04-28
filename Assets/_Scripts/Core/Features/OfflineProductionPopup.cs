@@ -1,3 +1,4 @@
+using Core.Utility;
 using System;
 using System.Text;
 using TMPro;
@@ -20,7 +21,7 @@ namespace Core.Features
 
             _tweener.Show();
 
-            _earnedText.SetText($"Earned: {_offlineProduction.GetEarnedCurrency()}");
+            _earnedText.SetText($"Earned: {_offlineProduction.GetEarnedCurrency().LimitDecimalPoints(2)}");
             _durationText.SetText($"You were offline for {FormatDuration(_offlineProduction.GetOfflineDuration())}");
         }
 

@@ -14,6 +14,6 @@ namespace Core
 
         public int GetPreviousTierGeneratorsThreshold();
 
-        public void ResetGenerator();
+        public void AddEffect(IMultiplierEffect effect);
     }
 }

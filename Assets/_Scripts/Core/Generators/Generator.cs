@@ -48,6 +48,11 @@ namespace Core.Generators
 
             OnGeneratorChangedState?.Invoke(this,
                 new OnGeneratorChangedStateArgs { Generator = this, IsActive = true });
+
+            Bank.OnPrestige += (sender, args) =>
+            {
+                ResetGenerator();
+            };
         }
 
         private void OnEnable()
@@ -93,7 +98,12 @@ namespace Core.Generators
             float baseProduction = GetBaseProduction();
             float productionMultiplier = GetProductionMultiplier();
 
-            return baseProduction * Mathf.Pow(productionMultiplier, _level - 1) * _effectsHandler.GetTotalMultiplier();
+            return baseProduction * Mathf.Pow(productionMultiplier, _level - 1) * GetMultiplier();
+        }
+        
+        public float GetMultiplier()
+        {
+            return _effectsHandler.GetTotalMultiplier();
         }
 
         private float GetBaseProduction()
@@ -141,7 +151,10 @@ namespace Core.Generators
 
         public void ResetGenerator()
         {
+            _effectsHandler.ClearEffects();
+
             SetLevel(1);
+
             if (GetTier() > 1)
                 gameObject.SetActive(false);
         }

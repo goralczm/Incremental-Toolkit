@@ -26,18 +26,13 @@ namespace Core.Generators
                 }
                 else
                     _activeGenerators.Remove(args.Generator);
-
-                _cachedProduction = GetActiveGenerators().Sum(g => g.GetProduction());
-            };
-
-            Generator.OnGeneratorLeveledUp += (sender, args) =>
-            {
-                _cachedProduction = GetActiveGenerators().Sum(g => g.GetProduction());
             };
         }
 
-        public float GetActiveGeneratorsProduction() => _cachedProduction;
-        
+        public float GetActiveGeneratorsProduction() => GetActiveGenerators().Sum(g => g.GetProduction());
+
         public List<IGenerator> GetAllGenerators() => _allGenerators;
+
+        public IGenerator GetGeneratorByTier(int tier) => _allGenerators.Find(g => g.GetTier() == tier);
     }
 }
