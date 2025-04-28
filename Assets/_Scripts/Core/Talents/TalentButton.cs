@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,12 +7,41 @@ namespace Core
 {
     public class TalentButton : MonoBehaviour
     {
+        [Header("Talent")]
         [SerializeField] private TalentDefinition _talent;
 
+        [Header("Prerequisites")]
+        [SerializeField] private TalentButton[] _prerequisites;
+
+        [Header("UI Elements")]
         [SerializeField] private Image _icon;
         [SerializeField] private Image _border;
+        [SerializeField] private GameObject _lockPanel;
 
+        private int _prerequisitesMet = 0;
         private bool _used;
+        private bool _locked;
+
+        public Action OnTalentUsed;
+
+        public void Setup()
+        {
+            if (_prerequisites.Length > 0)
+                SetLockState(true);
+            else
+                SetLockState(false);
+
+            foreach (var requisite in _prerequisites)
+            {
+                requisite.OnTalentUsed += () =>
+                {
+                    _prerequisitesMet++;
+
+                    if (_prerequisitesMet == _prerequisites.Length)
+                        SetLockState(false);
+                };
+            }
+        }
 
         private void Start()
         {
@@ -19,13 +50,26 @@ namespace Core
 
         public void UseTalent()
         {
-            if (_used) return;
+            if (_locked || _used || !PrerequsitesMet()) return;
 
-            _talent.ExecuteEffect();
-            SetUsed(true);
+            ExecuteEffect();
         }
 
-        public string GetTalentName() => _talent.Name;
+        public void ExecuteEffect()
+        {
+            _talent.ExecuteEffect();
+
+            SetUsed(true);
+
+            OnTalentUsed?.Invoke();
+        }
+
+        private bool PrerequsitesMet()
+        {
+           return _prerequisites.All(prerequisite => prerequisite.WasUsed());
+        }
+
+        public string GetTalentName() => _talent.name;
 
         public bool WasUsed() => _used;
 
@@ -33,10 +77,10 @@ namespace Core
         {
             _used = used;
 
-            UpdateVisuals();
+            UpdateUsedStateVisuals();
         }
 
-        private void UpdateVisuals()
+        private void UpdateUsedStateVisuals()
         {
             if (_used)
                 _border.color = Color.green;
@@ -47,6 +91,18 @@ namespace Core
         public void ResetButton()
         {
             SetUsed(false);
+        }
+
+        private void SetLockState(bool state)
+        {
+            _locked = state;
+
+            UpdateLockedStateVisuals();
+        }
+
+        private void UpdateLockedStateVisuals()
+        {
+            _lockPanel.SetActive(_locked);
         }
     }
 }

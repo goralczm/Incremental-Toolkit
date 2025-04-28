@@ -12,6 +12,8 @@ namespace Core
         {
             _talentButtons = FindObjectsByType<TalentButton>(FindObjectsInactive.Include, FindObjectsSortMode.None).ToList();
 
+            _talentButtons.ForEach(btn => btn.Setup());
+
             Bank.OnPrestige += (sender, args) =>
             {
                 foreach (var talentButton in _talentButtons)
