@@ -4,11 +4,11 @@ using Zenject;
 
 namespace Core.Generators
 {
-    public class Generator : MonoBehaviour
+    public class Generator : MonoBehaviour, IGenerator
     {
         public class OnGeneratorLeveledUpArgs : EventArgs
         {
-            public Generator Generator;
+            public IGenerator Generator;
         }
 
         public class OnGeneratorChangedStateArgs : EventArgs
@@ -17,15 +17,19 @@ namespace Core.Generators
             public bool IsActive;
         }
 
-        [Header("Settings")] [SerializeField] private int _tier = 1;
+        [Header("Settings")]
+        [SerializeField] private int _tier = 1;
         [SerializeField] private int _level = 1;
         [SerializeField] private int _unlockThreshold = 10;
         [SerializeField] private Color _notEnoughCurrencyColor;
         [SerializeField] private Color _enoughCurrencyColor;
-        [SerializeField] private float _multiplier = 1;
+
+        [Header("Instances")]
+        [SerializeField] private SpriteRenderer _rend;
 
         [Inject] private Bank _bank;
-        [SerializeField] private SpriteRenderer _rend;
+
+        private EffectsHandler _effectsHandler = new();
 
         public static event EventHandler<OnGeneratorLeveledUpArgs> OnGeneratorLeveledUp;
         public static event EventHandler<OnGeneratorChangedStateArgs> OnGeneratorChangedState;
@@ -58,6 +62,11 @@ namespace Core.Generators
                 new OnGeneratorChangedStateArgs { Generator = this, IsActive = false });
         }
 
+        private void Update()
+        {
+            _effectsHandler.Update(Time.deltaTime);
+        }
+
         public void AddLevel() => _level++;
 
         public bool BuyUpgrade()
@@ -81,10 +90,20 @@ namespace Core.Generators
 
         public float GetProduction()
         {
-            float baseProduction = Mathf.Max(1, Mathf.CeilToInt(1 * Mathf.Pow(6.5f, _tier - 1)));
-            float productionMultiplier = 1.07f + .15f * (_tier - 1);
+            float baseProduction = GetBaseProduction();
+            float productionMultiplier = GetProductionMultiplier();
 
-            return baseProduction * Mathf.Pow(productionMultiplier, _level - 1) * _multiplier;
+            return baseProduction * Mathf.Pow(productionMultiplier, _level - 1) * _effectsHandler.GetTotalMultiplier();
+        }
+
+        private float GetBaseProduction()
+        {
+            return Mathf.Max(1, Mathf.CeilToInt(1 * Mathf.Pow(6.5f, _tier - 1)));
+        }
+
+        private float GetProductionMultiplier()
+        {
+            return 1.07f + .15f * (_tier - 1);
         }
 
         public int GetCost()
@@ -118,8 +137,20 @@ namespace Core.Generators
 
         public int GetTier() => _tier;
 
-        public void AddMultiplier(float amount) => _multiplier += amount;
+        public bool GetState() => gameObject.activeSelf;
 
-        public void RemoveMultiplier(float amount) => _multiplier -= amount;
+        public void ResetGenerator()
+        {
+            SetLevel(1);
+            if (GetTier() > 1)
+                gameObject.SetActive(false);
+        }
+
+        public void SetState(bool state)
+        {
+            gameObject.SetActive(state);
+        }
+
+        public void AddEffect(IMultiplierEffect effect) => _effectsHandler.AddEffect(effect);
     }
 }

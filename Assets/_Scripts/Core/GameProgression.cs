@@ -27,6 +27,9 @@ namespace Core
         public void Load()
         {
             _data = SaveSystem.LoadData<SavableData>(SAVE_FILE_NAME, true) as SavableData;
+
+            if (_data == null)
+                _data = new SavableData();
             
             OnProgressLoaded?.Invoke(this, new OnProgressLoadedEventArgs { Data = _data });
         }

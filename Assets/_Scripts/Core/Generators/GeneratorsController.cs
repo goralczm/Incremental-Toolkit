@@ -6,16 +6,16 @@ namespace Core.Generators
 {
     public class GeneratorsController : MonoBehaviour
     {
-        private List<Generator> _activeGenerators = new();
-        private List<Generator> _allGenerators = new();
+        private List<IGenerator> _activeGenerators = new();
+        private List<IGenerator> _allGenerators = new();
 
-        public List<Generator> GetActiveGenerators() => _activeGenerators;
+        public List<IGenerator> GetActiveGenerators() => _activeGenerators;
 
         private float _cachedProduction;
 
         private void Awake()
         {
-            _allGenerators = FindObjectsByType<Generator>(FindObjectsInactive.Include, FindObjectsSortMode.None).ToList();
+            _allGenerators = FindObjectsByType<Generator>(FindObjectsInactive.Include, FindObjectsSortMode.None).Select(g => g as IGenerator).ToList();
 
             Generator.OnGeneratorChangedState += (sender, args) =>
             {
@@ -38,6 +38,6 @@ namespace Core.Generators
 
         public float GetActiveGeneratorsProduction() => _cachedProduction;
         
-        public List<Generator> GetAllGenerators() => _allGenerators;
+        public List<IGenerator> GetAllGenerators() => _allGenerators;
     }
 }

@@ -23,10 +23,11 @@ namespace Core
         public const float BETA = .5f;
 
         [SerializeField] private float _currency;
-        [FormerlySerializedAs("_prestige")] [SerializeField] private int _prestigePoints;
-        [SerializeField] private float _multiplier = 1f;
+        [SerializeField] private int _prestigePoints;
 
         [Inject] private GeneratorsController _generatorsController;
+
+        private EffectsHandler _effectsHandler = new();
 
         public static event EventHandler<OnCurrencyChangedEventArgs> OnCurrencyChanged;
         public static event EventHandler<OnPrestigeIncreasedEventArgs> OnPrestigeIncreased;
@@ -37,6 +38,11 @@ namespace Core
             {
                 if (e.tick % (int)(1f / GameTick.TICK_INTERVAL) == 0) ProduceTotalCurrency();
             };
+        }
+
+        private void Update()
+        {
+            _effectsHandler.Update(Time.deltaTime);
         }
 
         public float GetCurrency() => _currency;
@@ -61,10 +67,12 @@ namespace Core
 
         public float GetTotalProduction()
         {
-            float generatorsProduction = _generatorsController.GetActiveGeneratorsProduction();
-            float prestigeMultiplier = GetPrestigeMultiplier();
+            return ApplyMultiplier(_generatorsController.GetActiveGeneratorsProduction());
+        }
 
-            return generatorsProduction * prestigeMultiplier;
+        public float ApplyMultiplier(float currency)
+        {
+            return currency * GetPrestigeMultiplier() * _effectsHandler.GetTotalMultiplier();
         }
 
         public float GetPrestigeMultiplier()
@@ -72,14 +80,9 @@ namespace Core
             return Mathf.Pow(1 + .02f, GetPrestigePoints());
         }
 
-        public float ApplyMultiplier(float currency)
-        {
-            return currency * _multiplier;
-        }
-
         public void ProduceTotalCurrency()
         {
-            AddCurrency(ApplyMultiplier(GetTotalProduction()));
+            AddCurrency(GetTotalProduction());
         }
 
         public int GetPrestigePoints() => _prestigePoints;
@@ -96,24 +99,15 @@ namespace Core
 
         public void Prestige()
         {
-            Generator[] generators =
-                FindObjectsByType<Generator>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            List<IGenerator> generators = _generatorsController.GetAllGenerators();
 
-            for (int i = 0; i < generators.Length; i++)
-            {
-                if (generators[i].GetTier() > 1)
-                    generators[i].gameObject.SetActive(false);
-
-                generators[i].SetLevel(1);
-            }
+            foreach (var generator in generators) generator.ResetGenerator();
 
             _prestigePoints += CalculatePrestigePoints();
             OnPrestigeIncreased?.Invoke(this, new OnPrestigeIncreasedEventArgs { Prestige = GetPrestigePoints() });
             SetCurrency(0);
         }
 
-        public void AddMultiplier(float amount) => _multiplier += amount;
-
-        public void RemoveMultiplier(float amount) => _multiplier -= amount;
+        public void AddEffect(IMultiplierEffect effect) => _effectsHandler.AddEffect(effect);
     }
 }
