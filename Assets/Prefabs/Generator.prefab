@@ -141,11 +141,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tier: 1
-  _level: 1
+  _level: 0
   _unlockThreshold: 5
   _notEnoughCurrencyColor: {r: 1, g: 0.3443396, b: 0.3443396, a: 1}
   _enoughCurrencyColor: {r: 0.69474363, g: 1, b: 0.43867922, a: 1}
-  _bank: {fileID: 0}
   _rend: {fileID: 5188937663053699011}
 --- !u!114 &5558122284327937498
 MonoBehaviour:
@@ -442,7 +441,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

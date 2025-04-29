@@ -24,13 +24,14 @@ namespace Core
             public int AvailablePrestigePoints;
         }
 
-        public const float KAPPA = .0065f;
-        public const float BETA = .5f;
+        public const float KAPPA = .005f;
+        public const float BETA = .4f;
 
         [SerializeField] private float _currency;
         [SerializeField] private int _prestigePoints;
 
         [Inject] private GeneratorsController _generatorsController;
+        [Inject] private Statistics _statistics;
 
         private EffectsHandler _effectsHandler = new();
 
@@ -38,6 +39,7 @@ namespace Core
         public static event EventHandler<OnPrestigePointsChangedEventArgs> OnPrestigePointsChanged;
         public static event EventHandler<OnAvailablePrestigePointsChangedEventArgs> OnAvailablePrestigePointsChanged;
         public static event EventHandler OnPrestige;
+        public static event Action<float> OnCurrencyEarned;
 
         private void Awake()
         {
@@ -83,6 +85,13 @@ namespace Core
         public void AddCurrency(float amount)
         {
             SetCurrency(GetCurrency() + amount);
+
+            OnCurrencyEarned?.Invoke(amount);
+        }
+
+        public float GetCurrencyPerClick()
+        {
+            return _generatorsController.GetGeneratorByTier(1).GetProduction();
         }
 
         public float GetTotalProduction()
@@ -109,7 +118,7 @@ namespace Core
 
         public int CalculatePrestigePoints()
         {
-            return Mathf.FloorToInt(KAPPA * Mathf.Pow(GetCurrency(), BETA));
+            return Mathf.FloorToInt(KAPPA * Mathf.Pow(_statistics.GetTotalEarned(), BETA));
         }
 
         public void SetPrestigePoints(int prestigePoints)
@@ -123,7 +132,13 @@ namespace Core
             _prestigePoints += CalculatePrestigePoints();
             OnPrestige?.Invoke(this, EventArgs.Empty);
             OnPrestigePointsChanged?.Invoke(this, new OnPrestigePointsChangedEventArgs { PrestigePoints = GetPrestigePoints() });
+            ClearEffects();
             SetCurrency(0);
+        }
+
+        public void ClearEffects()
+        {
+            _effectsHandler.ClearEffects();
         }
 
         public void AddEffect(IMultiplierEffect effect) => _effectsHandler.AddEffect(effect);

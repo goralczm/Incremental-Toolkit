@@ -13,6 +13,8 @@ namespace Core.Generators
 
         private float _cachedProduction;
 
+        private Dictionary<int, IGenerator> _cachedGeneratorsByTier = new();
+
         private void Awake()
         {
             _allGenerators = FindObjectsByType<Generator>(FindObjectsInactive.Include, FindObjectsSortMode.None).Select(g => g as IGenerator).ToList();
@@ -33,6 +35,14 @@ namespace Core.Generators
 
         public List<IGenerator> GetAllGenerators() => _allGenerators;
 
-        public IGenerator GetGeneratorByTier(int tier) => _allGenerators.Find(g => g.GetTier() == tier);
+        public IGenerator GetGeneratorByTier(int tier)
+        {
+            if (_cachedGeneratorsByTier.TryGetValue(tier, out var generator))
+                return generator;
+
+            generator = _allGenerators.Find(g => g.GetTier() == tier);
+            _cachedGeneratorsByTier.Add(tier, generator);
+            return generator;
+        }
     }
 }

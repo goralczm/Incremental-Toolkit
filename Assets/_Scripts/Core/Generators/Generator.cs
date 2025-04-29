@@ -90,11 +90,13 @@ namespace Core.Generators
 
         public void ProduceCurrency()
         {
-            _bank.AddCurrency(_bank.ApplyMultiplier(GetProduction()));
+            _bank.AddCurrency(_bank.GetCurrencyPerClick());
         }
 
         public float GetProduction()
         {
+            if (_level == 0) return 0;
+
             float baseProduction = GetBaseProduction();
             float productionMultiplier = GetProductionMultiplier();
 
@@ -156,7 +158,10 @@ namespace Core.Generators
             SetLevel(1);
 
             if (GetTier() > 1)
+            {
+                SetLevel(0);
                 gameObject.SetActive(false);
+            }
         }
 
         public void SetState(bool state)
