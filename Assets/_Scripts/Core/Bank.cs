@@ -33,7 +33,7 @@ namespace Core
         [Inject] private GeneratorsController _generatorsController;
         [Inject] private Statistics _statistics;
 
-        private EffectsHandler _effectsHandler = new();
+        private EffectsHandler _effectsHandler;
 
         public static event EventHandler<OnCurrencyChangedEventArgs> OnCurrencyChanged;
         public static event EventHandler<OnPrestigePointsChangedEventArgs> OnPrestigePointsChanged;
@@ -43,9 +43,11 @@ namespace Core
 
         private void Awake()
         {
-            GameTick.OnTick += delegate(object sender, GameTick.OnTickEventArgs e)
+            _effectsHandler = GetComponent<EffectsHandler>();
+
+            GameTick.OnTick += (sender, args) =>
             {
-                if (e.tick % (int)(1f / GameTick.TICK_INTERVAL) == 0) ProduceTotalCurrency();
+                AddCurrency(GetTotalProduction() * GameTick.TICK_INTERVAL);
             };
 
             OnCurrencyChanged += (sender, args) =>
@@ -64,7 +66,7 @@ namespace Core
 
         private void Update()
         {
-            _effectsHandler.Update(Time.deltaTime);
+            _effectsHandler.Tick(Time.deltaTime);
         }
 
         public float GetCurrency() => _currency;
@@ -107,11 +109,6 @@ namespace Core
         public float GetPrestigeMultiplier()
         {
             return Mathf.Pow(1 + .02f, GetPrestigePoints());
-        }
-
-        public void ProduceTotalCurrency()
-        {
-            AddCurrency(GetTotalProduction());
         }
 
         public int GetPrestigePoints() => _prestigePoints;

@@ -29,13 +29,15 @@ namespace Core.Generators
 
         [Inject] private Bank _bank;
 
-        private EffectsHandler _effectsHandler = new();
+        private EffectsHandler _effectsHandler;
 
         public static event EventHandler<OnGeneratorLeveledUpArgs> OnGeneratorLeveledUp;
         public static event EventHandler<OnGeneratorChangedStateArgs> OnGeneratorChangedState;
 
         private void Start()
         {
+            _effectsHandler = GetComponent<EffectsHandler>();
+
             Bank.OnCurrencyChanged += (sender, args) =>
             {
                 if (args.Currency >= GetCost())
@@ -69,7 +71,7 @@ namespace Core.Generators
 
         private void Update()
         {
-            _effectsHandler.Update(Time.deltaTime);
+            _effectsHandler.Tick(Time.deltaTime);
         }
 
         public void AddLevel() => _level++;

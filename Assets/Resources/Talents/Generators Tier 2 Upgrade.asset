@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fef9c2558db48b94db21d38703afc432, type: 3}
-  m_Name: Generators Tier 1 Upgrade +
+  m_Name: Generators Tier 2 Upgrade
   m_EditorClassIdentifier: 
-  Name: Generators Tier 1 Upgrade +
   Description: 
   Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
-  Tier: 1
-  Factor: 2
+  Cost: 2000
+  Tier: 2
+  Factor: 1.5

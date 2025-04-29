@@ -22,9 +22,11 @@ public class GeneratorEditor : Editor
         
         GUILayout.Label("Info");
         GUILayout.Label($"Cost: {_generator.GetCost()}");
-        GUILayout.Label($"Production: {_generator.GetProduction()}");
-        GUILayout.Label($"Multiplier: {_generator.GetMultiplier()}");
         if (Application.isPlaying)
+        {
+            GUILayout.Label($"Production: {_generator.GetProduction()}");
+            GUILayout.Label($"Multiplier: {_generator.GetMultiplier()}");
             GUILayout.Label($"Time to buy: {_generator.GetCost() / FindAnyObjectByType<Bank>().GetTotalProduction()}");
+        }
     }
 }

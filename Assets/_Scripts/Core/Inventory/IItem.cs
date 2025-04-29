@@ -4,6 +4,8 @@ namespace Core
 {
     public interface IItem
     {
+        public int GetID();
+
         public string GetName();
         
         public string GetDescription();

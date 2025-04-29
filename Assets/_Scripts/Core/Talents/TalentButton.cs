@@ -1,7 +1,9 @@
 using System;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Core
 {
@@ -16,7 +18,10 @@ namespace Core
         [Header("UI Elements")]
         [SerializeField] private Image _icon;
         [SerializeField] private Image _border;
+        [SerializeField] private TextMeshProUGUI _costText;
         [SerializeField] private GameObject _lockPanel;
+
+        [Inject] private Bank _bank;
 
         private int _prerequisitesMet = 0;
         private bool _used;
@@ -41,18 +46,22 @@ namespace Core
                         SetLockState(false);
                 };
             }
-        }
 
-        private void Start()
-        {
             _icon.sprite = _talent.Icon;
+            _costText.SetText(_talent.Cost.ToString());
         }
 
         public void UseTalent()
         {
-            if (_locked || _used || !PrerequsitesMet()) return;
+            if (_locked || _used || !PrerequsitesMet() || !_bank.HasEnough(_talent.Cost)) return;
 
+            BuyTalent();
             ExecuteEffect();
+        }
+
+        private void BuyTalent()
+        {
+            _bank.RemoveCurrency(_talent.Cost);
         }
 
         public void ExecuteEffect()

@@ -21,7 +21,7 @@ public class BankEditor : Editor
             GUILayout.Label($"Prestige Points: {_bank.CalculatePrestigePoints()}");
         }
 
-        float ppThreshold = Mathf.Pow(Bank.KAPPA, -(1 / Bank.BETA));
+        float ppThreshold = Mathf.Pow(Bank.KAPPA, -(1f / Bank.BETA));
 
         GUILayout.Label($"PP Threshold ~= {ppThreshold}");
         if (Application.isPlaying)

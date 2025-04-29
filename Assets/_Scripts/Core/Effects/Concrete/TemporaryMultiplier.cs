@@ -7,7 +7,7 @@ namespace Core
         public float Factor { get; }
         public bool IsExpired => _remaining <= 0f;
 
-        private float _remaining;
+        public float _remaining;
 
         public TemporaryMultiplier(float factor, float duration)
         {

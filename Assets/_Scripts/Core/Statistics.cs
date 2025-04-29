@@ -12,6 +12,11 @@ namespace Core
             {
                 SetTotalEarned(GetTotalEarned() + amount);
             };
+
+            Bank.OnPrestige += (sender, args) =>
+            {
+                SetTotalEarned(0);
+            };
         }
 
         public void SetTotalEarned(float amount)

@@ -2,8 +2,8 @@ namespace Core
 {
     public interface IMultiplierEffect
     {
-        float Factor { get; }
-        bool IsExpired { get; }
-        void Tick(float deltaTime);
+        public float Factor { get; }
+        public bool IsExpired { get; }
+        public void Tick(float deltaTime);
     }
 }
