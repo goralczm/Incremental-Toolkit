@@ -7,6 +7,6 @@ namespace Core
         public string Description;
         public Sprite Icon;
 
-        public abstract void ExecuteEffect();
+        public abstract void Execute();
     }
 }

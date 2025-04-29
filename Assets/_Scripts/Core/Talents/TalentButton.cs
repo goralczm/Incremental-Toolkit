@@ -57,7 +57,7 @@ namespace Core
 
         public void ExecuteEffect()
         {
-            _talent.ExecuteEffect();
+            _talent.Execute();
 
             SetUsed(true);
 

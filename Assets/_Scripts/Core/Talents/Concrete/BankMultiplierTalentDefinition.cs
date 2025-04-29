@@ -7,7 +7,7 @@ namespace Core
     {
         public float Factor = 1.05f;
 
-        public override void ExecuteEffect()
+        public override void Execute()
         {
             FindFirstObjectByType<Bank>().AddEffect(new PermanentMultiplier(Factor));
         }
