@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 
@@ -9,6 +8,8 @@ namespace Core
     [RequireComponent(typeof(EffectsHandler))]
     public class EffectsHandlerSaveDataHandler : MonoBehaviour, ISavable
     {
+        [SerializeField] private string _UUID = Guid.NewGuid().ToString();
+
         private EffectsHandler _effectsHandler;
 
         private void Awake()
@@ -17,7 +18,7 @@ namespace Core
 
             GameProgression.OnProgressLoaded += (sender, args) =>
             {
-                if (args.Data.TryGetData("Effects JSON", out object effectsAsJson))
+                if (args.Data.TryGetData($"Effects JSON {_UUID}", out object effectsAsJson))
                 {
                     string effectsString = Convert.ToString(effectsAsJson);
 
@@ -45,7 +46,7 @@ namespace Core
 
             string effectsAsJson = JsonConvert.SerializeObject(_effectsHandler.GetEffects(), settings);
 
-            return new List<(string, object)> { ("Effects JSON", effectsAsJson) };
+            return new List<(string, object)> { ($"Effects JSON {_UUID}", effectsAsJson) };
         }
     }
 }

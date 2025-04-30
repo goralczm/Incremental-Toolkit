@@ -148,6 +148,7 @@ MonoBehaviour:
   _notEnoughCurrencyColor: {r: 1, g: 0.3443396, b: 0.3443396, a: 1}
   _enoughCurrencyColor: {r: 0.69474363, g: 1, b: 0.43867922, a: 1}
   _rend: {fileID: 5188937663053699011}
+  _effectsHandler: {fileID: 2531216666459161422}
 --- !u!114 &5558122284327937498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,6 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48497ff444249eb4883f19d5d87f9be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _UUID: 0979f5d2-3277-4344-a23e-d8d5ef366329
 --- !u!1 &4938635493780323494
 GameObject:
   m_ObjectHideFlags: 0

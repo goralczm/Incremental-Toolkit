@@ -20,9 +20,9 @@ namespace Core
 
                     List<int> savedItems = (List<int>)items;
 
-                    foreach (var itemID in savedItems)
+                    foreach (var item in savedItems)
                     {
-                        IItem foundItem = allItems.First(i => i.GetID().Equals(itemID));
+                        IItem foundItem = allItems.First(i => i.GetID().Equals(item));
                         if (foundItem != null)
                             _inventory.AddItem(foundItem);
                     }

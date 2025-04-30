@@ -15,5 +15,6 @@ MonoBehaviour:
   Description: 
   Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   Cost: 100
+  PreventFromExecutingOnLoad: 1
   Tier: 1
   Factor: 2

@@ -1,6 +1,6 @@
 {
-    "name": "Systems",
-    "rootNamespace": "Systems",
+    "name": "SaveSystem",
+    "rootNamespace": "SaveSystem",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

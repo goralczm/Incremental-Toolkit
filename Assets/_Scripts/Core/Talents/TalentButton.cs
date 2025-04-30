@@ -68,10 +68,17 @@ namespace Core
         {
             _talent.Execute();
 
+            AfterTalentExecuted();
+        }
+
+        public void AfterTalentExecuted()
+        {
             SetUsed(true);
 
             OnTalentUsed?.Invoke();
         }
+
+        public bool PreventFromExecutingOnLoad() => _talent.PreventFromExecutingOnLoad;
 
         private bool PrerequsitesMet()
         {
@@ -100,6 +107,11 @@ namespace Core
         public void ResetButton()
         {
             SetUsed(false);
+
+            if (_prerequisites.Length > 0)
+                SetLockState(true);
+            else
+                SetLockState(false);
         }
 
         private void SetLockState(bool state)

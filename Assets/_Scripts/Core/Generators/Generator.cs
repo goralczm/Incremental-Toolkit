@@ -4,6 +4,7 @@ using Zenject;
 
 namespace Core.Generators
 {
+    [RequireComponent(typeof(EffectsHandler))]
     public class Generator : MonoBehaviour, IGenerator
     {
         public class OnGeneratorLeveledUpArgs : EventArgs
@@ -26,18 +27,16 @@ namespace Core.Generators
 
         [Header("Instances")]
         [SerializeField] private SpriteRenderer _rend;
+        [SerializeField] private EffectsHandler _effectsHandler;
 
         [Inject] private Bank _bank;
 
-        private EffectsHandler _effectsHandler;
 
         public static event EventHandler<OnGeneratorLeveledUpArgs> OnGeneratorLeveledUp;
         public static event EventHandler<OnGeneratorChangedStateArgs> OnGeneratorChangedState;
 
         private void Start()
         {
-            _effectsHandler = GetComponent<EffectsHandler>();
-
             Bank.OnCurrencyChanged += (sender, args) =>
             {
                 if (args.Currency >= GetCost())

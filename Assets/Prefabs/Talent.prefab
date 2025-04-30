@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4905082554717609343}
   - component: {fileID: 8376244831205236384}
   - component: {fileID: 2675363389597068906}
+  - component: {fileID: 7036038336170909223}
   m_Layer: 0
   m_Name: Cost Text
   m_TagString: Untagged
@@ -136,6 +137,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!225 &7036038336170909223
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2681417485952350083}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &4730766794068499075
 GameObject:
   m_ObjectHideFlags: 0

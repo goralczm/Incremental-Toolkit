@@ -20,7 +20,12 @@ namespace Core
                     if (args.Data.TryGetData(talentButton.GetTalentName(), out object wasUsed))
                     {
                         if (Convert.ToBoolean(wasUsed))
-                            talentButton.ExecuteEffect();
+                        {
+                            if (!talentButton.PreventFromExecutingOnLoad())
+                                talentButton.ExecuteEffect();
+                            else
+                                talentButton.AfterTalentExecuted();
+                        }
                     }
                 }
             };

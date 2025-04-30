@@ -70,14 +70,23 @@ namespace Core.Visuals
             int generatorsCount = _generatorsController.GetActiveGenerators().Count;
             _currentGeneratorIndex = Mathf.Clamp(_currentGeneratorIndex, 0, generatorsCount - 1);
 
-            _leftButton.SetActive(true);
-            _rightArrow.SetActive(true);
+            if (_leftButton != null)
+                _leftButton.SetActive(true);
+
+            if (_rightArrow != null)
+                _rightArrow.SetActive(true);
 
             if (_currentGeneratorIndex == generatorsCount - 1)
-                _rightArrow.SetActive(false);
+            {
+                if (_rightArrow != null)
+                    _rightArrow.SetActive(false);
+            }
 
             if (_currentGeneratorIndex == 0)
-                _leftButton.SetActive(false);
+            {
+                if (_leftButton != null)
+                    _leftButton.SetActive(false);
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 {
-    "name": "Systems.SaveSystem",
-    "rootNamespace": "Systems.SaveSystem",
+    "name": "Settings",
+    "rootNamespace": "Settings",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

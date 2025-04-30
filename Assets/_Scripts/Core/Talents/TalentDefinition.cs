@@ -10,6 +10,8 @@ namespace Core
 
         public int Cost;
 
+        public bool PreventFromExecutingOnLoad;
+
         public abstract void Execute();
     }
 }
