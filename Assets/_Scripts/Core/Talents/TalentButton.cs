@@ -106,6 +106,7 @@ namespace Core
 
         public void ResetButton()
         {
+            _prerequisitesMet = 0;
             SetUsed(false);
 
             if (_prerequisites.Length > 0)

@@ -1,7 +1,10 @@
 {
     "name": "Community",
     "rootNamespace": "Community",
-    "references": [],
+    "references": [
+        "GUID:c3e847927e5747f9a371134e85820ab3",
+        "GUID:9c92cd3bb64af8e4a8fac551f4963afb"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

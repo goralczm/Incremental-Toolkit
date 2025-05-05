@@ -1,23 +1,24 @@
 using Core.Utility;
 using TMPro;
-using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 
 namespace Core.UI
 {
-    public class CurrencyDisplay : DynamicValueText
+    public class CurrencyDisplay : MonoBehaviour
     {
+        [SerializeField] private TextMeshProUGUI _text;
+
         private void Awake()
         {
             Bank.OnCurrencyChanged += delegate(object sender, Bank.OnCurrencyChangedEventArgs e)
             {
-                SetValue(e.Currency);
+                _text.SetText(GetDisplayValue(e.Currency));
             };
         }
 
-        public override string GetDisplayValue(string value)
+        public string GetDisplayValue(float value)
     {
-            return $"Currency: {value}";
+            return $"Currency: {value.LimitDecimalPoints(2)}";
         }
     }
 }
