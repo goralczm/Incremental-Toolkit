@@ -1,0 +1,18 @@
+{
+    "name": "Community.Friends.Interactions",
+    "rootNamespace": "Community.Friends.Interactions",
+    "references": [
+        "GUID:c3e847927e5747f9a371134e85820ab3",
+        "GUID:aeea120c3e04b3c4788eee010252e3d6",
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
