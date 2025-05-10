@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 0
   Description: 
-  Icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  Icon: {fileID: -2472550899878969189, guid: e8eb77be9309d6544a4f6172304fd044, type: 3}
   Tier: 1
   Factor: 1.1
   Duration: 10

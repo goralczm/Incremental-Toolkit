@@ -20,7 +20,8 @@ namespace Core.UI
 
         private void UpdateDisplay(float amount)
         {
-            _productionText.SetText($"Production: {amount.LimitDecimalPoints(2)}/s");
+            //_productionText.SetText($"Production: {amount.LimitDecimalPoints(2)}/s");
+            _productionText.SetText($"{amount.LimitDecimalPoints(2)}/s");
         }
     }
 }

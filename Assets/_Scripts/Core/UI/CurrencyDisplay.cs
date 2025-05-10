@@ -17,8 +17,9 @@ namespace Core.UI
         }
 
         public string GetDisplayValue(float value)
-    {
-            return $"Currency: {value.LimitDecimalPoints(2)}";
+        {
+            return value.FormatToLowestNumber();
+            //return $"Currency: {value.LimitDecimalPoints(2)}";
         }
     }
 }

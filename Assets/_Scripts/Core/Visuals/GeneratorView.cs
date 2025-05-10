@@ -3,6 +3,7 @@ using DG;
 using DG.Tweening;
 using Zenject;
 using Core.Generators;
+using System;
 
 namespace Core.Visuals
 {
@@ -23,6 +24,8 @@ namespace Core.Visuals
 
         private Vector2 _startPos;
         private float _cooldownTime;
+
+        public Action<IGenerator> OnViewChanged;
 
         private void Start()
         {
@@ -45,6 +48,8 @@ namespace Core.Visuals
 
             UpdateButtonsVisibility();
             MoveToTargetPosition();
+
+            OnViewChanged?.Invoke(GetCurrentGeneratorInView());
         }
 
         public void MoveLeft()
@@ -55,6 +60,8 @@ namespace Core.Visuals
 
             UpdateButtonsVisibility();
             MoveToTargetPosition();
+
+            OnViewChanged?.Invoke(GetCurrentGeneratorInView());
         }
 
         private void MoveToTargetPosition()
@@ -87,6 +94,14 @@ namespace Core.Visuals
                 if (_leftButton != null)
                     _leftButton.SetActive(false);
             }
+        }
+
+        public IGenerator GetCurrentGeneratorInView()
+        {
+            if (_generatorsController.GetActiveGenerators().Count == 0)
+                return null;
+
+            return _generatorsController.GetActiveGenerators()[_currentGeneratorIndex];
         }
     }
 }

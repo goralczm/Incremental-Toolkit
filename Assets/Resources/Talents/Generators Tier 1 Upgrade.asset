@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Generators Tier 1 Upgrade
   m_EditorClassIdentifier: 
   Description: 
-  Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  Icon: {fileID: -6971532040270379717, guid: 897d6e2d2b22a9f4ba4d15c2e1c5fbaf, type: 3}
   Cost: 100
   PreventFromExecutingOnLoad: 1
   Tier: 1

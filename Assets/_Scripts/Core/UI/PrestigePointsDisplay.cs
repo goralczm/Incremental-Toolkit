@@ -11,7 +11,7 @@ namespace Core
         {
             Bank.OnPrestigePointsChanged += (sender, args) =>
             {
-                gameObject.SetActive(args.PrestigePoints > 0);
+                _prestigePointsText.gameObject.SetActive(args.PrestigePoints > 0);
                 _prestigePointsText.SetText($"PP: {args.PrestigePoints}");
             };
         }

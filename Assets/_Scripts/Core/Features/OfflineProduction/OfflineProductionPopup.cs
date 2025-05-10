@@ -21,7 +21,7 @@ namespace Core.Features.OfflineProduction
 
             _tweener.Show();
 
-            _earnedText.SetText($"Earned: {_offlineProduction.GetEarnedCurrency().LimitDecimalPoints(2)}");
+            _earnedText.SetText($"Earned: {_offlineProduction.GetEarnedCurrency().FormatToLowestNumber()}");
             _durationText.SetText($"You were offline for {FormatDuration(_offlineProduction.GetOfflineDuration())}");
         }
 

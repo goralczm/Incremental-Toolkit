@@ -15,5 +15,9 @@ namespace Core
         public int GetPreviousTierGeneratorsThreshold();
 
         public void AddEffect(IMultiplierEffect effect);
+
+        public bool BuyUpgrade();
+
+        public int GetCost();
     }
 }

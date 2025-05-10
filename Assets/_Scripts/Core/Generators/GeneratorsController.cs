@@ -28,6 +28,8 @@ namespace Core.Generators
                 }
                 else
                     _activeGenerators.Remove(args.Generator);
+
+                _activeGenerators = _activeGenerators.OrderBy(o => o.GetTier()).ToList();
             };
         }
 

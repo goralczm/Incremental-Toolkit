@@ -26,7 +26,6 @@ namespace Core.Generators
         [SerializeField] private Color _enoughCurrencyColor;
 
         [Header("Instances")]
-        [SerializeField] private SpriteRenderer _rend;
         [SerializeField] private EffectsHandler _effectsHandler;
 
         [Inject] private Bank _bank;
@@ -37,16 +36,6 @@ namespace Core.Generators
 
         private void Start()
         {
-            Bank.OnCurrencyChanged += (sender, args) =>
-            {
-                if (args.Currency >= GetCost())
-                    _rend.color = _enoughCurrencyColor;
-                else
-                    _rend.color = _notEnoughCurrencyColor;
-            };
-
-            _rend.color = _notEnoughCurrencyColor;
-
             OnGeneratorChangedState?.Invoke(this,
                 new OnGeneratorChangedStateArgs { Generator = this, IsActive = true });
 
