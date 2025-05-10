@@ -1,0 +1,20 @@
+{
+    "name": "Core.Features.OfflineProduction",
+    "rootNamespace": "",
+    "references": [
+        "GUID:aeea120c3e04b3c4788eee010252e3d6",
+        "GUID:c93b8dca84cbaba49af25f0d9aaffe63",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:a390daa4d222ec74ebfae232c7777c1b",
+        "GUID:ce222ea54d7c1424cac9a55a695c1f4b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -7,14 +7,14 @@ namespace Core
     {
         public class OnTickEventArgs : EventArgs
         {
-            public int tick;
+            public int Tick;
         }
 
         public static event EventHandler<OnTickEventArgs> OnTick;
 
         public const float TICK_INTERVAL = .1f;
 
-        private int _tick;
+        [SerializeField] private int _tick;
         private float _tickTimer;
 
         private void Update()
@@ -25,7 +25,7 @@ namespace Core
             {
                 _tickTimer -= TICK_INTERVAL;
                 _tick++;
-                OnTick?.Invoke(this, new OnTickEventArgs { tick = _tick });
+                OnTick?.Invoke(this, new OnTickEventArgs { Tick = _tick });
             }
         }
     }

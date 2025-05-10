@@ -14,6 +14,8 @@ namespace Community
     {
         const string LeaderboardId = "Currency";
 
+        [SerializeField] private GameObject _panel;
+
         [Inject] private Statistics _statistics;
 
         string VersionId { get; set; }
@@ -24,20 +26,34 @@ namespace Community
 
         public static Action<LeaderboardScoresPage> OnLeaderboardInitialized;
 
+        private float _cooldown;
+
         public async void Setup()
         {
             InvokeRepeating("UpdateLeaderboard", 0, 15f); // TODO: figure out good heart beat
-            
+        }
+
+        private void OnEnable()
+        {
+            UpdateLeaderboard();
         }
 
         public async void UpdateLeaderboard()
         {
+            if (Time.time < _cooldown) return;
+
             await AddScore();
+            print("Score saved!");
+
+            if (!_panel.activeSelf) return;
+
+            _cooldown = Time.time + 15f;
 
             try
             {
                 LeaderboardScoresPage scores = await GetScores();
                 OnLeaderboardInitialized?.Invoke(scores);
+                print("Leaderboard updated!");
             }
             catch (Exception e)
             {

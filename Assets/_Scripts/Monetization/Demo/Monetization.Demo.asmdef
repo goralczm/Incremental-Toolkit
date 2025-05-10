@@ -1,0 +1,17 @@
+{
+    "name": "Monetization.Demo",
+    "rootNamespace": "Monetization.Demo",
+    "references": [
+        "GUID:aeea120c3e04b3c4788eee010252e3d6",
+        "GUID:c93b8dca84cbaba49af25f0d9aaffe63"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
